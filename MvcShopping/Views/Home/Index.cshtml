@@ -1,0 +1,16 @@
+﻿@model List<MvcShopping.Models.ProductCategory>
+
+@{
+    ViewBag.Title = "首页";
+}
+
+<h2>@Html.DisplayNameFor(model => model[0])</h2>
+
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>
+            @Html.ActionLink(item.Name, "ProductList", new { id = item.Id,name = item.Name })
+        </li>
+    }
+</ul>

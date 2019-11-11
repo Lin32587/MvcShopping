@@ -31,7 +31,7 @@ namespace MvcShopping.Models
 
         [DisplayName("商品颜色")]
         [Required(ErrorMessage ="请选择颜色")]
-        public string Color { get; set; }
+        public Color Color { get; set; }
 
         [DisplayName("商品售价")]
         [Required(ErrorMessage ="请输入售价")]
