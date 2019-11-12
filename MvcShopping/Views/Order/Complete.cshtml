@@ -9,7 +9,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>OrderHeader</h4>
+        <h2>结账</h2>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -61,7 +61,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("回首页", "Index","Home")
 </div>
 
 @section Scripts {
