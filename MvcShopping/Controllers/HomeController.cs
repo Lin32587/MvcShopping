@@ -39,7 +39,18 @@ namespace MvcShopping.Controllers
         //商品明细
         public ActionResult ProductDetail(int Id)
         {
-            return View();
+            var productCategory = new ProductCategory() { Id = Id, Name = "文具" };
+            var data = new Product()
+            {
+                Id = Id,
+                ProductCategory = productCategory,
+                Name = "商品" + Id,
+                Description = "N/A",
+                Price = 40,
+                PublishOn = DateTime.Now,
+                Color = Color.Transparent
+            };
+            return View(data);
         }
     }
 }

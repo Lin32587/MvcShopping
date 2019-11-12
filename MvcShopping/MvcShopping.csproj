@@ -130,6 +130,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\MemberLoginViewModel.cs" />
     <Compile Include="Models\Members.cs" />
     <Compile Include="Models\OrderDetail.cs" />
     <Compile Include="Models\OrderHeader.cs" />
@@ -213,11 +214,13 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Home\ProductDetail.cshtml" />
+    <Content Include="Views\Member\Register.cshtml" />
+    <Content Include="Views\Member\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Cart\" />
-    <Folder Include="Views\Member\" />
     <Folder Include="Views\Order\" />
   </ItemGroup>
   <ItemGroup>

@@ -19,7 +19,7 @@ namespace MvcShopping.Controllers
 
         //写入会员信息
         [HttpPost]
-        public ActionResult Register(Members member)
+        public ActionResult Register([Bind(Exclude = "RegisterOn,AuthCode")]Members member)
         {
             return View();
         }

@@ -28,7 +28,7 @@ namespace MvcShopping.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [DisplayName("姓名")]
+        [DisplayName("中文姓名")]
         [Required(ErrorMessage ="请输入姓名")]
         [MaxLength(5,ErrorMessage ="姓名不可超过5个字")]
         public string Name { get; set; }
