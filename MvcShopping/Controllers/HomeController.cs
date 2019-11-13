@@ -11,6 +11,8 @@ namespace MvcShopping.Controllers
 {
     public class HomeController : Controller
     {
+        MvcShoppingContext db = new MvcShoppingContext();
+
         // GET: Home
         //首页
         public ActionResult Index()

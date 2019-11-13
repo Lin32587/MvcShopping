@@ -4,31 +4,36 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - 我的 ASP.NET 应用程序</title>
+    <title>@ViewBag.Title - Mvc商城</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
-            </div>
+    <nav class="site-header fixed-top py-1" style="background-color:black">
+        <div class="container d-flex flex-column flex-md-row justify-content-between">
+            <a class="py-2" href="@Url.Action("Index","Home")" style="color:white">
+                <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block mx-auto" focusable="false" role="img"><title>Product</title><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg>
+            </a>
+            <a class="py-2 d-none d-md-inline-block font-weight-bolder nav-link" href="@Url.Action("Index","Home")" style="color:white;font-family:'Microsoft YaHei'">首页</a>
+            <a class="py-2 d-none d-md-inline-block font-weight-bolder nav-link" href="@Url.Action("Index","Cart")" style="color:white">购物车</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="py-2 d-none d-md-inline-block font-weight-bolder nav-link" href="#" style="color:white"></a>
+                <a class="py-2 d-none d-md-inline-block font-weight-bolder nav-link" href="@Url.Action("Logout","Member")" style="color:white">注销</a>
+            }
+            else
+            {
+                <a class="py-2 d-none d-md-inline-block font-weight-bolder nav-link" href="#" style="color:white">登录</a>
+                <a class="py-2 d-none d-md-inline-block font-weight-bolder nav-link" href="#" style="color:white">注册</a>
+            }
+
         </div>
-    </div>
-    <div class="container body-content">
+    </nav>
+    <div class="container body-content mt-2">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 应用程序</p>
+            <p>&copy; @DateTime.Now.Year - Mvc商城</p>
         </footer>
     </div>
 

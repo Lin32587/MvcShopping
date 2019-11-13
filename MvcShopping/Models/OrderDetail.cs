@@ -18,7 +18,7 @@ namespace MvcShopping.Models
 
         [DisplayName("订单主文件")]
         [Required]
-        public OrderHeader OrderHeader { get; set; }
+        public virtual OrderHeader OrderHeader { get; set; }
 
         [DisplayName("订购商品")]
         [Required]

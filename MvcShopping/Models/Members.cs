@@ -44,5 +44,7 @@ namespace MvcShopping.Models
         [DisplayName("会员启用认证码")]
         [MaxLength(36)]
         public string AuthCode { get; set; }
+
+        public virtual ICollection<OrderHeader> Orders { get; set; }
     }
 }
