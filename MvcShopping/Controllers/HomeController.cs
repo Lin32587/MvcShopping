@@ -11,18 +11,23 @@ namespace MvcShopping.Controllers
 {
     public class HomeController : Controller
     {
-        MvcShoppingContext db = new MvcShoppingContext();
+        MvcShoppingMall db = new MvcShoppingMall();
 
         // GET: Home
         //首页
         public ActionResult Index()
         {
-            var data = new List<ProductCategory>()
+            var data = db.ProductCategories.ToList();
+
+            if(data.Count == 0)
             {
-                new ProductCategory(){Id=1,Name="文具"},
-                new ProductCategory(){Id=2,Name="书籍"},
-                new ProductCategory(){Id=3,Name="食品"},
-            };
+                db.ProductCategories.Add(new ProductCategory() { Id = 1, Name = "文具" });
+                db.ProductCategories.Add(new ProductCategory() { Id = 2, Name = "书籍" });
+                db.ProductCategories.Add(new ProductCategory() { Id = 3, Name = "食品" });
+                db.SaveChanges();
+                data = db.ProductCategories.ToList();
+            }
+            
             return View(data);
         }
 
