@@ -10,6 +10,8 @@ namespace MvcShopping.Controllers
 {
     public class MemberController : Controller
     {
+        MvcShoppingMall db = new MvcShoppingMall();
+
         // GET: Member
         //会员注册页面
         public ActionResult Register()
@@ -17,11 +19,33 @@ namespace MvcShopping.Controllers
             return View();
         }
 
+        private string pwSalt = "AlrySqloPe2Mh784QQwG6jRAfkdPpDa90J0i";
+
         //写入会员信息
         [HttpPost]
         public ActionResult Register([Bind(Exclude = "RegisterOn,AuthCode")]Members member)
         {
-            return View();
+            var chk_member = db.Members.Where(p => p.Email == member.Email).FirstOrDefault();
+            if(chk_member != null)
+            {
+                ModelState.AddModelError("Email", "您输入的Email已经被注册过了");
+            }
+
+            if (ModelState.IsValid)
+            {
+                member.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(pwSalt + member.Password, "SHA1");
+                member.RegisterOn = DateTime.Now;
+                member.AuthCode = Guid.NewGuid().ToString();
+
+                db.Members.Add(member);
+                db.SaveChanges();
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         //显示会员登录页面
@@ -54,7 +78,13 @@ namespace MvcShopping.Controllers
 
         public bool ValidateUser(string email,string password)
         {
-            throw new NotImplementedException();
+            var hash_pw = FormsAuthentication.HashPasswordForStoringInConfigFile(pwSalt + password, "SHA1");
+
+            var member = (from p in db.Members
+                          where p.Email == email && p.Password == hash_pw
+                          select p).FirstOrDefault();
+
+            return (member != null);
         }
 
         public ActionResult Logout()

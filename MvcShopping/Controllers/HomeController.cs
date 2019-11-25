@@ -32,31 +32,32 @@ namespace MvcShopping.Controllers
         }
 
         //商品列表
-        public ActionResult ProductList(int Id,string Name)
+        public ActionResult ProductList(int Id)
         {
-            var productCategory = new ProductCategory() { Id = Id, Name = Name };
-            var data = new List<Product>()
+            var productCategory = db.ProductCategories.Find(Id);
+            if (productCategory != null)
             {
-                new Product(){Id=1,ProductCategory=productCategory,Name="中性笔",Description="N/A",Price=30,PublishOn=DateTime.Now,Color=Color.Blue},
-                new Product(){Id=1,ProductCategory=productCategory,Name="铅笔",Description="N/A",Price=5,PublishOn=DateTime.Now,Color=Color.Black},
-            };
-            return View(data);
+                var data = productCategory.Products.ToList();
+
+                if (data.Count == 0)
+                {
+                    productCategory.Products.Add(new Product(){ Name = productCategory.Name + "类别下商品1", Color = Color.Red, Description = "N/A", Price = 99, PublishOn = DateTime.Now, ProductCategory = productCategory });
+                    productCategory.Products.Add(new Product(){ Name = productCategory.Name + "类别下商品2", Color = Color.Blue, Description = "N/A", Price = 149, PublishOn = DateTime.Now, ProductCategory = productCategory });
+                    db.SaveChanges();
+                    data = productCategory.Products.ToList();
+                }
+                return View(data);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
         }
 
         //商品明细
         public ActionResult ProductDetail(int Id)
         {
-            var productCategory = new ProductCategory() { Id = Id, Name = "文具" };
-            var data = new Product()
-            {
-                Id = Id,
-                ProductCategory = productCategory,
-                Name = "商品" + Id,
-                Description = "N/A",
-                Price = 40,
-                PublishOn = DateTime.Now,
-                Color = Color.Transparent
-            };
+            var data = db.Products.Find(Id);
             return View(data);
         }
     }
