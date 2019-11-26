@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MvcShopping.Models;
 
 namespace MvcShopping.Controllers
 {
     //[Authorize]//必须登录会员才能使用结账功能
     public class OrderController : Controller
     {
+        MvcShoppingMall db = new MvcShoppingMall();
+
         //显示完成订单的页面
         public ActionResult Complete()
         {

@@ -71,9 +71,17 @@ namespace MvcShopping.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateAmount(int ProductId,int NewAmount)
+        public ActionResult UpdateAmount(List<Cart> Carts)
         {
-            return View();
+            foreach(var item in Carts)
+            {
+                var existingCart = this.Carts.FirstOrDefault(p => p.Product.Id == item.Product.Id);
+                if(existingCart != null)
+                {
+                    existingCart.Amount = item.Amount;
+                }
+            }
+            return RedirectToAction("Index","Cart");
         }
     }
 }
