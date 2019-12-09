@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MvcShopping.Models;
 using System.Web.Security;
+using System.Net.Mail;
 
 namespace MvcShopping.Controllers
 {
@@ -40,11 +41,47 @@ namespace MvcShopping.Controllers
                 db.Members.Add(member);
                 db.SaveChanges();
 
+                SendAuthCodeToMember(member);
+
                 return RedirectToAction("Index", "Home");
             }
             else
             {
                 return View();
+            }
+        }
+
+        private void SendAuthCodeToMember(Members member)
+        {
+            string mailBody =
+                System.IO.File.ReadAllText(Server.MapPath("~/App_Data/MemberRegisterEMailTemplate.html"));
+
+            mailBody = mailBody.Replace("{{Name}}", member.Name);
+            mailBody = mailBody.Replace("{{RegisterOn}}", member.RegisterOn.ToString("F"));
+            var auth_url = new UriBuilder(Request.Url)
+            {
+                Path = Url.Action("VaildateRegister", new { id = member.AuthCode }),
+                Query = ""
+            };
+            mailBody = mailBody.Replace("{{AUTH_URL}}", auth_url.ToString());
+            try
+            {
+                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("Salty lin", "aizj11");
+                SmtpServer.EnableSsl = true;
+
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress("lin3258714569@gmail.com");
+                mail.To.Add(member.Email);
+                mail.Subject = "MvcShopping会员确认信";
+                mail.IsBodyHtml = true;
+
+                SmtpServer.Send(mail);
+            }
+            catch(Exception ex)
+            {
+                //throw ex;
             }
         }
 

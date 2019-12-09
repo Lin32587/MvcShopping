@@ -39,8 +39,7 @@ namespace MvcShopping.Models
         [DataType(DataType.Currency)]
         public int TotalPrice { get; set; }
 
-        [DisplayName("订单备注")]
-        [DataType(DataType.MultilineText)]
+        [DisplayName("订单时间")]
         public DateTime BuyOn { get; set; }
 
         [NotMapped]

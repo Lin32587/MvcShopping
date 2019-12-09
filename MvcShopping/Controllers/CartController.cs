@@ -31,15 +31,15 @@ namespace MvcShopping.Controllers
             return View(this.Carts);
         }
 
-        //添加产品项目到购物车,如果没有传入Amount参数则默认购买数量为1
+
         [HttpPost]
+        //添加产品项目到购物车,如果没有传入Amount参数则默认购买数量为1   
         public ActionResult AddToCart(int ProductId,int Amount = 1)
         {
             var product = db.Products.Find(ProductId);
             if(product == null)
             {
                 return HttpNotFound();
-
             }
 
             var existingCart = this.Carts.FirstOrDefault(p => p.Product.Id == ProductId);
