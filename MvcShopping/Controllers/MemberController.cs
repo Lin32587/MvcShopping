@@ -109,7 +109,7 @@ namespace MvcShopping.Controllers
                     return Redirect(returnUrl);
                 }
             }
-            ModelState.AddModelError("", "您输入的账号或密码错误");
+            //ModelState.AddModelError("", "您输入的账号或密码错误");
             return View();
         }
 
@@ -120,8 +120,20 @@ namespace MvcShopping.Controllers
             var member = (from p in db.Members
                           where p.Email == email && p.Password == hash_pw
                           select p).FirstOrDefault();
-
-            return (member != null);
+            
+            if(member != null)
+            {
+                member.AuthCode = null;
+                db.SaveChanges();
+                Session["user"] = member;
+                return true;
+            }
+            else
+            {
+                ModelState.AddModelError("", "账号或密码错误");
+                return false;
+            }
+            
         }
 
         public ActionResult Logout()
