@@ -1,4 +1,7 @@
-﻿@model IEnumerable<MvcShopping.Models.Product>
+﻿@using PagedList
+@using PagedList.Mvc
+@using System.Security
+@model IEnumerable<MvcShopping.Models.Product>
 
 @{
     ViewBag.Title = "商品列表";
@@ -20,7 +23,7 @@
             alert("添加购物车失败(HTTP状态代码：'+xhr.status+')");
         }
     </script>
-    }
+}
 
 <h2>@Html.DisplayNameFor(model => model.ToList()[0])</h2>
 
@@ -40,13 +43,19 @@
         <th>添加购物车</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>@Html.ActionLink(item.Name,"ProductDetail",new { id=item.Id})</td>
-        <td>@Html.DisplayFor(modelItem => item.Description)</td>
-        <td>@Html.DisplayFor(modelItem => item.Price)</td>
-        <td>@Ajax.ActionLink("添加购物车","AddToCart","Cart",new { ProductId = item.Id},ajaxOption)</td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.ActionLink(item.Name, "ProductDetail", new { id = item.Id })</td>
+            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+            <td>@Html.DisplayFor(modelItem => item.Price)</td>
+            <td>@Ajax.ActionLink("添加购物车", "AddToCart", "Cart", new { ProductId = item.Id }, ajaxOption)</td>
+        </tr>
+    }
 
 </table>
+
+@{ 
+    var data = Model as IPagedList<MvcShopping.Models.Product>;
+}
+@Html.PagedListPager(list: data, generatePageUrl: page => Url.Action("ProductList", new { p = page }))
