@@ -14,6 +14,7 @@
 }
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script>
         function AddToCartSuccess() {
             alert("添加购物车成功");
@@ -55,7 +56,7 @@
 
 </table>
 
-@{ 
+@{
     var data = Model as IPagedList<MvcShopping.Models.Product>;
 }
 @Html.PagedListPager(list: data, generatePageUrl: page => Url.Action("ProductList", new { p = page }))
